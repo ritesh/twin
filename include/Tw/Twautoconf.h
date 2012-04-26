@@ -1,0 +1,103 @@
+#ifndef _TW_AUTOCONF_H
+#define _TW_AUTOCONF_H
+
+#define TW_HAVE_ALPHASORT 1
+#define TW_HAVE_ASM 1
+/* #undef TW_HAVE_ASM_PAGE_H */
+#define TW_HAVE_ATTRIBUTE_CONST 1
+#define TW_HAVE_ATTRIBUTE_PACKED 1
+#define TW_HAVE_CRYPT_H 1
+#define TW_HAVE_DIRENT_H 1
+#define TW_HAVE_DLFCN_H 1
+#define TW_HAVE_DLOPEN 1
+#define TW_HAVE_FCNTL_H 1
+#define TW_HAVE_FTIME 1
+#define TW_HAVE_GCC_I386_ASM 1
+#define TW_HAVE_GETHOSTBYNAME 1
+#define TW_HAVE_GETPAGESIZE 1
+#define TW_HAVE_GETPT 1
+#define TW_HAVE_GETSPNAM 1
+#define TW_HAVE_GETTIMEOFDAY 1
+/* #undef TW_HAVE_GGI_GGI_H */
+/* #undef TW_HAVE_GPM_H */
+#define TW_HAVE_GRANTPT 1
+/* #undef TW_HAVE_GTK_GTK_H */
+#define TW_HAVE_HSTRERROR 1
+#define TW_HAVE_INITGROUPS 1
+#define TW_HAVE_INLINE 1
+/* #undef TW_HAVE_INTTYPES_H */
+#define TW_HAVE_LIBCRYPT 1
+#define TW_HAVE_LIBDL 1
+/* #undef TW_HAVE_LIBGGI */
+/* #undef TW_HAVE_LIBGPM */
+/* #undef TW_HAVE_LIBGTK */
+/* #undef TW_HAVE_LIBLTDL */
+/* #undef TW_HAVE_LIBNCURSES */
+/* #undef TW_HAVE_LIBNSL */
+#define TW_HAVE_LIBPTHREAD 1
+/* #undef TW_HAVE_LIBSOCKET */
+/* #undef TW_HAVE_LIBTERMCAP */
+/* #undef TW_HAVE_LIBWSOCK32 */
+/* #undef TW_HAVE_LIBXPM */
+/* #undef TW_HAVE_LIBZ */
+#define TW_HAVE_LIMITS_H 1
+#define TW_HAVE_LONG_LONG 1
+#define TW_HAVE_LSTAT 1
+/* #undef TW_HAVE_LTDL_H */
+/* #undef TW_HAVE_MACHINE_PARAM_H */
+#define TW_HAVE_MEMCMP 1
+#define TW_HAVE_MEMORY_H 1
+#define TW_HAVE_MMAP 1
+/* #undef TW_HAVE_NCURSES_H */
+/* #undef TW_HAVE_NCURSES_NCURSES_H */
+/* #undef TW_HAVE_NCURSES_TERMCAP_H */
+#define TW_HAVE_PTHREAD_H 1
+#define TW_HAVE_PTSNAME 1
+#define TW_HAVE_PUTENV 1
+#define TW_HAVE_SCANDIR 1
+#define TW_HAVE_SELECT 1
+#define TW_HAVE_SETENV 1
+#define TW_HAVE_SHADOW_H 1
+#define TW_HAVE_STATIC_INLINE 1
+#define TW_HAVE_STDDEF_H 1
+/* #undef TW_HAVE_STDINT_H */
+#define TW_HAVE_STDLIB_H 1
+#define TW_HAVE_STRDUP 1
+#define TW_HAVE_STRERROR 1
+/* #undef TW_HAVE_STRINGS_H */
+/* #undef TW_HAVE_STRING_H */
+#define TW_HAVE_STRSPN 1
+#define TW_HAVE_STRSTR 1
+/* #undef TW_HAVE_SYS_FILIO_H */
+#define TW_HAVE_SYS_IOCTL_H 1
+#define TW_HAVE_SYS_MMAN_H 1
+#define TW_HAVE_SYS_PARAM_H 1
+#define TW_HAVE_SYS_RESOURCE_H 1
+#define TW_HAVE_SYS_SELECT_H 1
+/* #undef TW_HAVE_SYS_STAT_H */
+#define TW_HAVE_SYS_TIMEB_H 1
+#define TW_HAVE_SYS_TTYDEFAULTS_H 1
+#define TW_HAVE_SYS_TYPES_H 1
+#define TW_HAVE_SYS_UTSNAME_H 1
+#define TW_HAVE_SYS_WAIT_H 1
+/* #undef TW_HAVE_TERMCAP_H */
+#define TW_HAVE_TERMIOS_H 1
+#define TW_HAVE_TERMIO_H 1
+#define TW_HAVE_UNAME 1
+#define TW_HAVE_UNISTD_H 1
+#define TW_HAVE_UNLOCKPT 1
+#define TW_HAVE_USLEEP 1
+#define TW_HAVE_VPRINTF 1
+#define TW_HAVE_VSNPRINTF 1
+#define TW_HAVE_VSPRINTF 1
+#define TW_HAVE_WAIT3 1
+#define TW_HAVE_WAIT4 1
+/* #undef TW_HAVE_X11_XPM_H */
+/* #undef TW_HAVE_ZLIB_H */
+#define TW_RETSIGTYPE void
+/* #undef TW_SETVBUF_REVERSED */
+/* #undef TW_STDC_HEADERS */
+#define TW_TIME_WITH_SYS_TIME 1
+/* #undef TW_TM_IN_SYS_TIME */
+
+#endif /* _TW_AUTOCONF_H */

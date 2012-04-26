@@ -1,0 +1,13 @@
+-e  
+-e  
+-e  libTT.la: .libTT.la.shlib
+ .libTT.la.shlib: libTT.lo field.lo getset.lo method.lo array.lo wrap.lo mem.lo missing.lo  avl.lo
+
+-e  libTT.a: .libTT.a.arlib
+ .libTT.a.arlib: libTT.o field.o getset.o method.o array.o wrap.o mem.o missing.o  avl.o
+
+-e  
+-e  ifeq ($(SYS_SHLIBS),native)
+-e    LD_FLAGS_libTT.la+=-Wl,-soname,libTT.so.0
+
+-e  endif

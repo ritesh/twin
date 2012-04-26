@@ -1,0 +1,13 @@
+-e  
+-e  
+-e  libTutf.la: .libTutf.la.shlib
+ .libTutf.la.shlib: libTutf.lo
+
+-e  libTutf.a: .libTutf.a.arlib
+ .libTutf.a.arlib: libTutf.o
+
+-e  
+-e  ifeq ($(SYS_SHLIBS),native)
+-e    LD_FLAGS_libTutf.la+=-Wl,-soname,libTutf.so.0
+
+-e  endif

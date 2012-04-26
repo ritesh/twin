@@ -1,0 +1,72 @@
+#!/bin/sh
+# Copyright (C) 2000 by Massimiliano Ghilardi
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+#
+
+ARGS=
+DPY=
+
+while [ "$1" ]; do
+  case "$1" in
+    -h|--help|-help )
+      echo "Usage: twstart [OPTIONS]
+Attach a running twin server to a display or start a new server.
+If a server is found, \`twdisplay' is used to attach it to a display,
+else a new server is started.
+
+Currently known options:
+
+ -h, --help            show this help and exit
+ --twin@<TWDISPLAY>    specify server to contact instead of \`$TWDISPLAY'
+ <TWDISPLAY>           shortcut for --twin@<TWDISPLAY>
+ --                    end of options: pass further args to twin or twdisplay
+ --<OPTION>            other options are passed verbatim to twin or twdisplay
+"
+      exit 0
+      ;;
+    --twin@* )
+      DPY="${1:7}";
+      ;;
+    -twin@* )
+      DPY="${1:6}";
+      ;;
+    -- )
+      # end of twstart options, pass the rest to twin or twdisplay
+      shift
+      ARGS="$ARGS $@"
+      break
+      ;;
+    --*|-* )
+      ARGS="$ARGS $1";
+      ;;
+    *:[0-9a-fA-F]* )
+      DPY="$1";
+      ;;
+    * )
+      echo "twstart: unknown option \`$1\'
+try \`twstart --help\' for usage summary."
+      exit 1
+      ;;
+  esac
+  shift
+done
+
+if [ "$DPY" ]; then
+  # check it is a valid TWDISPLAY!
+  DPY=`twfindtwin "$DPY"`
+else
+  DPY=`twfindtwin`
+fi
+
+if [ "$DPY" ]; then
+  echo twstart: detected twin running on "$DPY"
+  exec twdisplay --twin@"$DPY" $ARGS
+else
+  exec twin $ARGS
+fi
+

@@ -1,0 +1,66 @@
+array.o array.lo: $(S) $(S)TT.h $(S)TTextern.h $(S)TTassert.h $(S)inlines.h $(S)utils.h $(S)array.h
+avl.o avl.lo: $(S) $(S) $(S)
+field.o field.lo: $(S) $(S)TT.h $(S)TTextern.h $(S)TTassert.h $(S)inlines.h $(S)utils.h $(S)tree_m4.h $(S)array.h $(S)field_m4.h
+getset.o getset.lo: $(S) $(S) $(S)TT.h $(S)TTextern.h $(S)TTassert.h $(S)utils.h $(S)inlines.h $(S)array.h $(S)getset_m4.h
+ifeq ($(CONF_SOCKET_PTHREADS),y)
+  CC_FLAGS_getset.o+=-DCONF_SOCKET_PTHREADS
+endif
+
+libTT.o libTT.lo: $(S) $(S) $(S) $(S)TT.h $(S) $(S)TTextern.h $(S)TTassert.h $(S)dummytheme.h $(S)inlines.h $(S)fire.h $(S)class.h $(S)seterrno.h $(S)create.h $(S)create_init_m4.h
+ifeq ($(CONF__MODULES),y)
+  CC_FLAGS_libTT.o+=-DCONF__MODULES
+endif
+ifeq ($(CONF_SOCKET_PTHREADS),y)
+  CC_FLAGS_libTT.o+=-DCONF_SOCKET_PTHREADS
+endif
+ifeq ($(CONF_TT_HW_TWIN_TUNNEL),y)
+  CC_FLAGS_libTT.o+=-DCONF_TT_HW_TWIN_TUNNEL
+endif
+ifeq ($(CONF_TT_HW_TWIN),y)
+  CC_FLAGS_libTT.o+=-DCONF_TT_HW_TWIN
+endif
+ifeq ($(CONF_TT_HW_GTK),y)
+  CC_FLAGS_libTT.o+=-DCONF_TT_HW_GTK
+endif
+ifeq ($(CONF_TT_HW_X11),y)
+  CC_FLAGS_libTT.o+=-DCONF_TT_HW_X11
+endif
+ifeq ($(CONF_TT_HW_TWIN_DETUNNEL),y)
+  CC_FLAGS_libTT.o+=-DCONF_TT_HW_TWIN_DETUNNEL
+endif
+ifeq ($(CONF_TT_HW_XML),y)
+  CC_FLAGS_libTT.o+=-DCONF_TT_HW_XML
+endif
+ifeq ($(DEBUG_TT_TIMER),y)
+  CC_FLAGS_libTT.o+=-DDEBUG_TT_TIMER
+endif
+
+mem.o mem.lo: $(S) $(S) $(S)TT.h $(S) $(S)TTextern.h
+ifeq ($(CONF_SOCKET_PTHREADS),y)
+  CC_FLAGS_mem.o+=-DCONF_SOCKET_PTHREADS
+endif
+ifeq ($(CONF__UNICODE),y)
+  CC_FLAGS_mem.o+=-DCONF__UNICODE
+endif
+
+method.o method.lo: $(S) $(S)TT.h $(S)TTextern.h $(S)TTassert.h $(S)tree_m4.h $(S)array.h $(S)method1_m4.h $(S)inlines.h $(S)utils.h $(S) $(S)method2_asm.h $(S)method2_m4.h $(S)utils.h
+ifeq ($(CONF__ASM),y)
+  CC_FLAGS_method.o+=-DCONF__ASM
+endif
+
+missing.o missing.lo: $(S) $(S)
+wrap.o wrap.lo: $(S) $(S)TT.h $(S) $(S)TTextern.h $(S)TTassert.h $(S)utils.h $(S)inlines.h $(S)wrap_m4.h
+ifeq ($(CONF_SOCKET_PTHREADS),y)
+  CC_FLAGS_wrap.o+=-DCONF_SOCKET_PTHREADS
+endif
+
+$(S)TT.h: $(S)TTtypes.h $(S)
+	@touch $@
+$(S)TTextern.h: $(S) $(S)create_decl_m4.h
+	@touch $@
+$(S)TTtypes.h: $(S) $(S) $(S) $(S) $(S) $(S) $(S) $(S) $(S) $(S)internaltypes.h $(S)limits_m4.h $(S)flags.h $(S)tree_m4.h $(S)decls_m4.h
+	@touch $@
+$(S)flags.h: $(S)
+	@touch $@
+$(S)utils.h: $(S)fire.h $(S)create_defs_m4.h
+	@touch $@

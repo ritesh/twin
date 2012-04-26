@@ -1,0 +1,43 @@
+$(T)include/TT/all_m4.h: $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T)
+$(T)include/check_asm.h: $(T)
+	@touch $@
+$(T)include/tty_ioctl.h: $(T)
+	@touch $@
+$(T)include/twin.h: $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T)
+	@touch $@
+$(T)include/unaligned.h: $(T)
+	@touch $@
+$(T)include/TT/TT.h: $(T) $(T)
+	@touch $@
+$(T)include/TT/TTerrno.h: $(T)
+	@touch $@
+$(T)include/TT/TTmem.h: $(T)
+	@touch $@
+$(T)include/TT/TTtypes.h: $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T)
+	@touch $@
+$(T)include/TT/tt.h: $(T)
+	@touch $@
+$(T)include/Tutf/Tutf.h: $(T)
+	@touch $@
+$(T)include/Tutf/Tutf_defs.h: $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T)
+	@touch $@
+$(T)include/Tutf/Tutftypes.h: $(T) $(T) $(T)
+	@touch $@
+$(T)include/Tw/Tw++.h: $(T) $(T)
+	@touch $@
+$(T)include/Tw/Tw.h: $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T)
+	@touch $@
+$(T)include/Tw/Tw1.h: $(T) $(T) $(T)
+	@touch $@
+$(T)include/Tw/Twavl.h: $(T)
+	@touch $@
+$(T)include/Tw/Twerrno.h: $(T)
+	@touch $@
+$(T)include/Tw/Twstat.h: $(T)
+	@touch $@
+$(T)include/Tw/Twtypes.h: $(T) $(T) $(T) $(T) $(T) $(T) $(T) $(T)
+	@touch $@
+$(T)include/Tw/missing.h: $(T) $(T)
+	@touch $@
+$(T)include/Tw/prefix.h: $(T)
+	@touch $@

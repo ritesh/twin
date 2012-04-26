@@ -1,0 +1,241 @@
+# Copyright (C) 2000 by Massimiliano Ghilardi
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+#
+
+# TOP_SRCDIR
+T="$1"
+shift
+
+# TOP_BUILDDIR
+B="$1"
+shift
+
+
+if test -z "$BASH"; then
+  echo 'WARNING: $BASH environment variable is not set. This script'
+  echo '(scripts/Configure.tty) requires bash, so it will probably fail.'
+  echo 'If it fails, check that you have bash correctly installed.'
+fi
+
+function yesno() {
+    eval "VAL=\${$1}"
+    eval "HELP=\${${1}_HELP}"
+    
+    if test "$VAL" = "y" -o "$VAL" = "m"; then
+	VAL="on"
+    else
+	VAL="off"
+    fi
+
+    : $[ CURRITEMS=CURRITEMS+1 ]
+    CURRCMD="$CURRCMD ${1#CONF_} \\\"$HELP\\\" $VAL"
+}
+
+# cannot rely on the value of dependency variable...
+# user may change it while inside "dialog"
+function yesno_dep() {
+   yesno "$1"
+   eval "yesno_dep_$1=$2"
+}
+
+function yesmodno() {
+   if test "$CONF__MODULES" = n; then
+      yesno "$1"
+   else
+      eval "VAL=\${$1}"
+      eval "HELP=\${${1}_HELP}"
+    
+      if test "$VAL" = "y"; then
+	  VAL="on";
+	  MOD="off";
+      elif test "$VAL" = "m"; then
+	  VAL="on";
+	  MOD="on";
+      else
+	  VAL="off";
+	  MOD="off";
+      fi
+    
+      : $[ CURRITEMS=CURRITEMS+2 ]
+      CURRCMD="$CURRCMD ${1#CONF_} \\\"$HELP\\\" $VAL ${1#CONF_}_MOD \\\" -> Compile as module\\\" $MOD"
+   fi
+}
+
+# cannot rely on the value of dependency variable...
+# user may change it while inside "dialog"
+function yesmodno_dep() {
+   yesmodno "$1"
+   eval "yesmodno_dep_$1=$2"
+}
+
+# here we CAN rely on the value of dependency variable...
+# as it it located in another menu
+function yesno_truedep() {
+   eval "DEP=\${$2}"
+   if test "$DEP" != n; then
+      yesno "$1"
+   else
+      eval "$1=n"
+   fi
+}
+
+# here we CAN rely on the value of dependency variable...
+# as it it located in another menu
+function yesmodno_truedep() {
+   eval "DEP=\${$2}"
+   if test "$DEP" != n; then
+      yesmodno "$1"
+   else
+      eval "$1=n"
+   fi
+}
+
+function msg() {
+    : $[ CURRITEMS=CURRITEMS+1 ]
+    CURRCMD="$CURRCMD :Information: \\\"${1}\\\" off"
+}
+
+function menu() {
+   eval "MAINCMD=\"\$MAINCMD ${1#CONF_} \\\"\${${1}_MENU}\\\"\""
+   : $[ MAINITEMS=MAINITEMS+1 ]
+   CURRMENU="$1"
+   CURRITEMS=0
+   CURRCMD=""
+}
+
+function endmenu() {
+   eval "MENU_${CURRMENU}=\"--separate-output --checklist \\\"\${${CURRMENU}_MENU}\\\" $[CURRITEMS+7] 80 $CURRITEMS $CURRCMD\""
+}
+
+function die() {
+   rm -f .dialog_*
+   echo
+   echo "Quitting..."
+   echo
+   echo "Twin configuration was NOT saved!"
+   echo
+   exit 0
+}
+
+function quit() {
+   rm -f .dialog_*
+   echo
+   echo "Twin configuration saved."
+   echo
+   exit 0
+}
+
+function dump() {
+    eval "VAL=\${$1}"
+    if [ "$VAL" = m -a "$CONF__MODULES" = n ]; then
+       VAL=y
+    fi
+    eval "DEP1=\${yesno_dep_$1}"
+    eval "DEP2=\${yesmodno_dep_$1}"
+    if [ "$DEP1" ]; then
+       eval "DEP1VAL=\${$DEP1}"
+       if [ "$DEP1VAL" = n ]; then
+         VAL=n
+       fi
+    elif [ "$DEP2" ]; then
+       eval "DEP2VAL=\${$DEP2}"
+       if [ "$DEP2VAL" = n ]; then
+         VAL=n
+       elif [ "$CONF__MODULES" = y -a "$DEP1VAL" = m -a "$VAL" = y ]; then
+         VAL=m
+       fi
+    fi
+    echo "$1=$VAL"
+}
+
+function fulldump() {
+   cat >"$B"conf/conf.current <<EOF
+#
+# This file holds the current configuration.
+# It was created by 'make menuconfig', do not edit!
+#
+# Configuration:
+#
+EOF
+
+   for i in `cat "$T"conf/conf.list`; do
+       dump $i
+   done >>"$B"conf/conf.current
+}
+
+function parse() {
+   # skip gtk/gdk error messages
+   CURR=`grep -v WARNING $2`;
+   LIST=`cat "$T"conf/conf.list | grep CONF_${1}`
+   for i in $LIST; do
+      THIS=n
+      for j in $CURR; do
+	 if [ "${i#CONF_}" = "$j" ]; then
+	    THIS=y
+	 elif [ "$THIS" = y -a "${i#CONF_}_MOD" = "$j" ]; then
+	    THIS=m
+	    break;
+	 fi
+      done
+      if [ "$CONF__MODULES" = n -a "$THIS" = m ]; then
+         THIS=y
+      fi
+      eval "$i=$THIS"
+   done
+}
+
+trap die SIGINT SIGQUIT SIGHUP SIGTERM
+
+MAINCMD=
+MAINITEMS=2
+
+. "$T"conf/conf.default
+if [ -f "$B"conf/conf.current ]; then
+   . "$B"conf/conf.current
+   if [ -f "$B"conf/conf.auto -a "$B"conf/conf.auto -nt "$B"conf/conf.current ]; then
+      . "$B"conf/conf.auto
+   fi
+elif [ -f "$B"conf/conf.auto ]; then
+   . "$B"conf/conf.auto
+fi
+
+. "$T"conf/conf.base
+
+MENU_MAIN="--menu \"Twin Configuration - Top Menu\" $[ MAINITEMS+7 ] 50 $MAINITEMS $MAINCMD SAVE \"Save config and exit\" QUIT \"Exit without saving\""
+
+if test "$1"; then
+  failure="$1"
+  shift
+else
+  failure=1
+fi
+if test "$1"; then
+  dialog="$@"
+else
+  dialog="dialog"
+fi
+
+while :; do
+   eval "$dialog $MENU_MAIN 2>.dialog_MENU_MAIN"
+   test $? != $failure || die
+   # skip gtk/gdk error messages
+   RES=`tail -n 1 .dialog_MENU_MAIN`;
+   case "$RES" in
+      SAVE)
+         fulldump; quit ;;
+      QUIT)
+         die ;;
+      *)
+         eval "MENU=\"\${MENU_CONF_${RES}}\""
+         if test "$MENU"; then
+            eval "$dialog $MENU 2>.dialog_MENU_${RES}" && parse $RES .dialog_MENU_${RES} && . "$T"conf/conf.base
+         fi
+         ;;
+   esac
+done
+
